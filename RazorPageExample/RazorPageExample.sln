@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPageExample.View", "RazorPageExample\RazorPageExample.View.csproj", "{89387BA0-3D53-45D2-A0CA-273410074106}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPageExample.View", "RazorPageExample\RazorPageExample.View.csproj", "{89387BA0-3D53-45D2-A0CA-273410074106}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPageExample.DataAccess", "RazorPageExample.DataAccess\RazorPageExample.DataAccess.csproj", "{F5C87AB2-3867-4C86-85F5-497D964FDA12}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPageExample.Tests", "RazorPageExample.Tests\RazorPageExample.Tests.csproj", "{F5618CE0-464B-42FE-A338-9831CADDEE6B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CE0AB499-3270-49E8-835F-90BDBF7560C1}"
+	ProjectSection(SolutionItems) = preProject
+		.filenesting.json = .filenesting.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
