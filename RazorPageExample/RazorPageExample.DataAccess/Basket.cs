@@ -11,7 +11,7 @@ namespace RazorPageExample.DataAccess
         public int Id { get; set; }
         public virtual IEnumerable<Product> Product { get; set; }
         [DataType(DataType.Currency)]
-        public long TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; }
 
         public User User { get; set; }
     }

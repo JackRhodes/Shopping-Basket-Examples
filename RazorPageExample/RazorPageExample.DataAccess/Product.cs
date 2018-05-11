@@ -15,7 +15,7 @@ namespace RazorPageExample.DataAccess
         public string Description { get; set; }
 
         [DataType(DataType.Currency)]
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         public ProductType ProductType { get; set; }
 
