@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MVCExample.Models.ViewModel
 {
-    public class ProductCreateViewModel
+    public class ProductViewModel
     {
         [Required]
         public ProductDto ProductDto { get; set; }

@@ -12,6 +12,8 @@ namespace MVCExample.DataAccess.Contracts
 
         Task<IEnumerable<Product>> GetAllProductsAsync();
 
-        Task<int> CreateProductAsync(Product product);      
+        Task<int> CreateProductAsync(Product product);
+
+        Task<int> UpdateProductAsync(Product product);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -56,7 +57,7 @@ namespace MVCExample.Controllers
 
             IEnumerable<ProductTypeDto> productTypeDto = mapper.Map<IEnumerable<ProductTypeDto>>(productType);
 
-            ProductCreateViewModel productCreateViewModel = new ProductCreateViewModel()
+            ProductViewModel productCreateViewModel = new ProductViewModel()
             {
                 ProductDto = new ProductDto(),
 
@@ -69,15 +70,15 @@ namespace MVCExample.Controllers
         // POST: Product/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind("ProductDto,ProductTypeDtos,ProductType")] ProductCreateViewModel productCreateViewModel)
+        public async Task<ActionResult> Create([Bind("ProductDto,ProductTypeDtos,ProductType")] ProductViewModel productViewModel)
         {
 
             if (ModelState.IsValid)
             {
                 //Refactor when possible
-                ProductType productType = await productTypeManager.GetProductTypeByIdAsync(productCreateViewModel.ProductType);
+                ProductType productType = await productTypeManager.GetProductTypeByIdAsync(productViewModel.ProductType);
 
-                ProductDto productDto = productCreateViewModel.ProductDto;
+                ProductDto productDto = productViewModel.ProductDto;
 
                 Product product = Mapper.Map<Product>(productDto);
 
@@ -92,28 +93,58 @@ namespace MVCExample.Controllers
             return View();
         }
 
-        //// GET: Product/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
+        // GET: Product/Edit/5
+        public async Task<ActionResult> Edit(int id)
+        {
+            try
+            {
+                Product product = await productManager.GetProductByIdAsync(id);
+                ProductDto productDto = mapper.Map<ProductDto>(product);
 
-        //// POST: Product/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
+                IEnumerable<ProductType> productType = await productTypeManager.GetAllProductTypesAsync();
 
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+                IEnumerable<ProductTypeDto> productTypeDto = mapper.Map<IEnumerable<ProductTypeDto>>(productType);
+
+                ProductViewModel productViewModel = new ProductViewModel()
+                {
+                    ProductDto = productDto,
+
+                    ProductTypeDtos = productTypeDto.ToList()
+                };
+
+                return View(productViewModel);
+            }
+
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(this.Index));
+            }
+        }
+
+        // POST: Product/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind("ProductDto,ProductTypeDtos,ProductType")] ProductViewModel productViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                //Refactor when possible
+                ProductType productType = await productTypeManager.GetProductTypeByIdAsync(productViewModel.ProductType);
+
+                ProductDto productDto = productViewModel.ProductDto;
+
+                Product product = Mapper.Map<Product>(productDto);
+
+                product.ProductType = productType;
+
+                await productManager.UpdateProductAsync(product);
+
+                return RedirectToAction(nameof(Index));
+
+            }
+
+            return View();
+        }
 
         //// GET: Product/Delete/5
         //public ActionResult Delete(int id)

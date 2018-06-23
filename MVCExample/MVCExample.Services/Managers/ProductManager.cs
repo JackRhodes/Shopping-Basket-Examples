@@ -24,7 +24,7 @@ namespace MVCExample.Services.Managers
 
         public Task<IEnumerable<Product>> FuzzySearchProductByName(string name)
         {
-            if(!(String.IsNullOrEmpty(name) || String.IsNullOrWhiteSpace(name)))
+            if (!(String.IsNullOrEmpty(name) || String.IsNullOrWhiteSpace(name)))
             {
                 return Task.Run(() => productRepository.FuzzySearchProductByName(name));
             }
@@ -32,7 +32,7 @@ namespace MVCExample.Services.Managers
             {
                 throw new ArgumentNullException();
             }
-            
+
         }
 
         public async Task<IEnumerable<Product>> GetAllProductsAsync()
@@ -43,6 +43,14 @@ namespace MVCExample.Services.Managers
         public async Task<Product> GetProductByIdAsync(int? id)
         {
             return await productRepository.GetProductByIdAsync(id);
+        }
+
+        public async Task<int> UpdateProductAsync(Product product)
+        {
+            if (GetProductByIdAsync(product.ProductId) != null)
+                return await productRepository.UpdateProductAsync(product);
+            else
+                throw new ArgumentException("Product not found");                    
         }
     }
 }

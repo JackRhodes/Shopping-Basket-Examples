@@ -17,6 +17,8 @@ namespace MVCExample.DataAccess.Repositorys
         public ProductRepository(ApplicationDbContext context)
         {
             this.context = context;
+            //Change tracking breaks when passing using Repository pattern. Disabled as I am not utilising.
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
         public IEnumerable<Product> FuzzySearchProductByName(string name)
@@ -41,6 +43,14 @@ namespace MVCExample.DataAccess.Repositorys
         {
             context.Products.Add(product);
 
+            return await context.SaveChangesAsync();
+        }
+
+        public async Task<int> UpdateProductAsync(Product product)
+        {
+            context.Products.Update(product);
+            //Allow for EF core to know that Entity has been updated. Without this, changing an item twice in a row causes an Exception
+            context.Entry(product).State = EntityState.Modified;
             return await context.SaveChangesAsync();
         }
     }
