@@ -1,20 +1,28 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>aspnet-MVCExample-F236B205-80B4-4400-B6BD-0CDC3C3CA6A4</UserSecretsId>
   </PropertyGroup>
 
-
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0-rc1-final" PrivateAssets="All" />
+    <Compile Remove="Views\Product\**" />
+    <Content Remove="Views\Product\**" />
+    <EmbeddedResource Remove="Views\Product\**" />
+    <None Remove="Views\Product\**" />
   </ItemGroup>
 
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\MVCExample.DataAccess\MVCExample.DataAccess.csproj" />
     <ProjectReference Include="..\MVCExample.Models\MVCExample.Models.csproj" />
+    <ProjectReference Include="..\MVCExample.Services\MVCExample.Services.csproj" />
   </ItemGroup>
 
 </Project>
