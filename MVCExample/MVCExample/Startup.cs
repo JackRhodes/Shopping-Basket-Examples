@@ -39,11 +39,11 @@ namespace MVCExample
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            RegisterDIServices(services);
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            RegisterDIServices(ref services);
-
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,12 +74,12 @@ namespace MVCExample
             });
         }
 
-        private void RegisterDIServices(ref IServiceCollection services)
+        private void RegisterDIServices(IServiceCollection services)
         {
             //Add Service Mappings here
-            services.AddAutoMapper();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IProductManager, ProductManager>();
+            services.AddAutoMapper();
         }
 
     }

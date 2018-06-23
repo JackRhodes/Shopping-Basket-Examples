@@ -5,17 +5,11 @@
     <UserSecretsId>aspnet-MVCExample-F236B205-80B4-4400-B6BD-0CDC3C3CA6A4</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Views\Product\**" />
-    <Content Remove="Views\Product\**" />
-    <EmbeddedResource Remove="Views\Product\**" />
-    <None Remove="Views\Product\**" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
   </ItemGroup>
 
 

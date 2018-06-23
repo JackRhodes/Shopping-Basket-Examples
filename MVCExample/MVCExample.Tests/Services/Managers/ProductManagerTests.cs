@@ -80,7 +80,11 @@ namespace MVCExample.Tests.Services.Managers
             mockProductRepository.Setup(x => x.FuzzySearchProductByName(It.IsAny<string>()))
                 .Returns(mockProductResponse);
 
-            mockProductRepository.Setup(x => x.GetProductByIdAsync(It.IsAny<int>())).ReturnsAsync(mockProduct);
+            mockProductRepository.Setup(x => x.GetProductByIdAsync(It.IsAny<int>()))
+                .ReturnsAsync(mockProduct);
+
+            mockProductRepository.Setup(x => x.GetAllProductsAsync())
+                .ReturnsAsync(mockProductResponse);
 
             productManager = new ProductManager(mockProductRepository.Object);
         }
@@ -109,6 +113,13 @@ namespace MVCExample.Tests.Services.Managers
         public void GetProductByIdAsync_ShouldReturnProduct_WhenIdPassed()
         {
             ReferenceEquals(mockProduct, productManager.GetProductByIdAsync(It.IsAny<int>()));
+        }
+
+        [TestMethod]
+        public void GetAllProductsAsync_ShouldReturn_AllProductWithinDatabse()
+        {
+            Assert.AreEqual(mockProductResponse.Count(), productManager.GetAllProductsAsync().Result.Count());
+
         }
 
     }

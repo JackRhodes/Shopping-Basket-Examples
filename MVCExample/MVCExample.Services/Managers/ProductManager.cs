@@ -30,6 +30,11 @@ namespace MVCExample.Services.Managers
             
         }
 
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        {
+            return await productRepository.GetAllProductsAsync();
+        }
+
         public async Task<Product> GetProductByIdAsync(int? id)
         {
             return await productRepository.GetProductByIdAsync(id);

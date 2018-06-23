@@ -1,0 +1,33 @@
+﻿@model MVCExample.Models.DTO.ProductsDto
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Available Products</h2>
+
+@if(Model.Products != null && Model.Products.Count()>0)
+{
+    <table>
+        
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+            </tr>
+
+        }
+
+    </table>
+
+}
+
+else
+{
+
+    <p>No Products found within database</p>
+
+}
+
+
+

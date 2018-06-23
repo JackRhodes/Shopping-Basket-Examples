@@ -11,5 +11,7 @@ namespace MVCExample.Services.Contracts
         Task<Product> GetProductByIdAsync(int? id);
 
         Task<IEnumerable<Product>> FuzzySearchProductByName(string name);
+
+        Task<IEnumerable<Product>> GetAllProductsAsync();
     }
 }

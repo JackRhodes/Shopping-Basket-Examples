@@ -9,6 +9,8 @@ namespace MVCExample.DataAccess.Contracts
         Task<Product> GetProductByIdAsync(int? id);
 
         IEnumerable<Product> FuzzySearchProductByName(string name);
+
+        Task<IEnumerable<Product>> GetAllProductsAsync();
         
     }
 }

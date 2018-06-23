@@ -31,5 +31,10 @@ namespace MVCExample.DataAccess.Repositorys
         {
             return await context.Products.SingleOrDefaultAsync(x => x.ProductId == id);
         }
+
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        {
+            return await context.Products.ToListAsync();
+        }
     }
 }
