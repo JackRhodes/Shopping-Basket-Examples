@@ -8,6 +8,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using MVCExample.Data;
+using MVCExample.DataAccess.Contracts;
+using MVCExample.DataAccess.Repositorys;
+using MVCExample.Services.Contracts;
+using MVCExample.Services.Managers;
 
 namespace MVCExample
 {
@@ -74,7 +78,8 @@ namespace MVCExample
         {
             //Add Service Mappings here
             services.AddAutoMapper();
-
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IProductManager, ProductManager>();
         }
 
     }
