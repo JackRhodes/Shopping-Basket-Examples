@@ -79,6 +79,8 @@ namespace MVCExample
             //Add Service Mappings here
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IProductManager, ProductManager>();
+            services.AddTransient<IProductTypeRepository, ProductTypeRepository>();
+            services.AddTransient<IProductTypeManager, ProductTypeManager>();
             services.AddAutoMapper();
         }
 

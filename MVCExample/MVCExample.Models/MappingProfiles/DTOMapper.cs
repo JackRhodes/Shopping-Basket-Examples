@@ -17,7 +17,7 @@ namespace MVCExample.Models.MappingProfiles
 
             CreateMap<Product, ProductDto>()
                 .ReverseMap();
-
+            
             CreateMap<ProductType, ProductTypeDto>()
                 .ReverseMap();
 

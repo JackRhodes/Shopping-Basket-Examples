@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MVCExample.Models.Data;
 using MVCExample.Models.DTO;
+using MVCExample.Models.ViewModel;
 using MVCExample.Services.Contracts;
 
 namespace MVCExample.Controllers
@@ -14,11 +16,13 @@ namespace MVCExample.Controllers
     {
         private readonly IProductManager productManager;
         private readonly IMapper mapper;
+        private readonly IProductTypeManager productTypeManager;
 
-        public ProductController(IProductManager productManager, IMapper mapper)
+        public ProductController(IProductManager productManager, IMapper mapper, IProductTypeManager productTypeManager)
         {
             this.productManager = productManager;
             this.mapper = mapper;
+            this.productTypeManager = productTypeManager;
         }
 
         // GET: Product
@@ -36,34 +40,57 @@ namespace MVCExample.Controllers
             return View(productsViewModel);
         }
 
-        //// GET: Product/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
+        // GET: Product/Details/5
+        public async Task<ActionResult> Details(int id)
+        {
+            Product product = await productManager.GetProductByIdAsync(id);
+            ProductDto productViewModel = Mapper.Map<ProductDto>(product);
 
-        //// GET: Product/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+            return View(productViewModel);
+        }
 
-        //// POST: Product/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add insert logic here
+        // GET: Product/Create
+        public async Task<ActionResult> Create()
+        {
+            IEnumerable<ProductType> productType = await productTypeManager.GetAllProductTypesAsync();
 
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+            IEnumerable<ProductTypeDto> productTypeDto = mapper.Map<IEnumerable<ProductTypeDto>>(productType);
+
+            ProductCreateViewModel productCreateViewModel = new ProductCreateViewModel()
+            {
+                ProductDto = new ProductDto(),
+
+                ProductTypeDtos = productTypeDto.ToList()
+            };
+
+            return View(productCreateViewModel);
+        }
+
+        // POST: Product/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind("ProductDto,ProductTypeDtos,ProductType")] ProductCreateViewModel productCreateViewModel)
+        {
+
+            if (ModelState.IsValid)
+            {
+                //Refactor when possible
+                ProductType productType = await productTypeManager.GetProductTypeByIdAsync(productCreateViewModel.ProductType);
+
+                ProductDto productDto = productCreateViewModel.ProductDto;
+
+                Product product = Mapper.Map<Product>(productDto);
+
+                product.ProductType = productType;
+
+                await productManager.CreateProductAsync(product);
+
+                return RedirectToAction(nameof(Index));
+
+            }
+
+            return View();
+        }
 
         //// GET: Product/Edit/5
         //public ActionResult Edit(int id)

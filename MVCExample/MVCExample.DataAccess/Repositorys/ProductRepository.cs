@@ -36,5 +36,12 @@ namespace MVCExample.DataAccess.Repositorys
         {
             return await context.Products.ToListAsync();
         }
+
+        public async Task<int> CreateProductAsync(Product product)
+        {
+            context.Products.Add(product);
+
+            return await context.SaveChangesAsync();
+        }
     }
 }

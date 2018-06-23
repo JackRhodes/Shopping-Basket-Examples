@@ -1,0 +1,38 @@
+﻿@model MVCExample.Models.ViewModel.ProductCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>ProductCreateViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label asp-for="ProductDto.Name"></label>
+            <input asp-for="ProductDto.Name" />
+
+            <label asp-for="ProductDto.Description"></label>
+            <input asp-for="ProductDto.Description" />
+
+            <label asp-for="ProductDto.Price"></label>
+            <input asp-for="ProductDto.Price" />
+
+            <label>Product Type</label>
+            <select asp-for="ProductDto.ProductType" asp-items="@(new SelectList(Model.ProductTypeDtos,"ProductTypeId","Name"))"></select>
+
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -17,6 +17,11 @@ namespace MVCExample.Services.Managers
             this.productRepository = productRepository;
         }
 
+        public async Task<int> CreateProductAsync(Product product)
+        {
+            return await productRepository.CreateProductAsync(product);
+        }
+
         public Task<IEnumerable<Product>> FuzzySearchProductByName(string name)
         {
             if(!(String.IsNullOrEmpty(name) || String.IsNullOrWhiteSpace(name)))
