@@ -12,7 +12,6 @@ namespace MVCExample.Data
         {
         }
 
-        public DbSet<Account> Account { get; set; }
         public DbSet<Basket> Basket { get; set; }
         public DbSet<BasketItem> BasketItems {get;set;}
         public DbSet<Product> Products { get; set; }

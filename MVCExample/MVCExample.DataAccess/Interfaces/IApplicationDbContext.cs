@@ -9,7 +9,6 @@ namespace MVCExample.DataAccess.Interfaces
 {
     public interface IApplicationDbContext: IDisposable
     {
-        DbSet<Account> Account { get; set; }
         DbSet<Basket> Basket { get; set; }
         DbSet<BasketItem> BasketItems { get; set; }
         DbSet<Product> Products { get; set; }

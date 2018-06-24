@@ -12,5 +12,7 @@ namespace MVCExample.Models.Data
 
         public Product Product {get;set;}
 
+        public Basket Basket {get; set; }
+
     }
 }

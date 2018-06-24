@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -10,6 +11,6 @@ namespace MVCExample.Models.Data
         [Key]
         public int BasketId { get; set; }
 
-        public Account Account { get; set; }
+        public IdentityUser IdentityUser { get; set; }
     }
 }

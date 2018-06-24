@@ -36,7 +36,7 @@ namespace MVCExample
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"), x=>x.MigrationsAssembly("MVCExample")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -81,6 +81,11 @@ namespace MVCExample
             services.AddTransient<IProductManager, ProductManager>();
             services.AddTransient<IProductTypeRepository, ProductTypeRepository>();
             services.AddTransient<IProductTypeManager, ProductTypeManager>();
+            services.AddTransient<IIdentityRepository, IdentityRepository>();
+            services.AddTransient<IAccountManager, AccountManager>();
+            services.AddTransient<IBasketRepository, BasketRepository>();
+            services.AddTransient<IBasketManager, BasketManager>();
+
             services.AddAutoMapper();
         }
 

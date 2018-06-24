@@ -4,14 +4,16 @@ using MVCExample.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MVCExample.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180624142242_Add BasketItem and Basket relationship")]
+    partial class AddBasketItemandBasketrelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,6 +75,9 @@ namespace MVCExample.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -112,6 +117,8 @@ namespace MVCExample.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -190,11 +197,11 @@ namespace MVCExample.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("IdentityUserId");
+                    b.Property<string>("AccountId");
 
                     b.HasKey("BasketId");
 
-                    b.HasIndex("IdentityUserId");
+                    b.HasIndex("AccountId");
 
                     b.ToTable("Basket");
                 });
@@ -252,6 +259,16 @@ namespace MVCExample.Data.Migrations
                     b.ToTable("ProductType");
                 });
 
+            modelBuilder.Entity("MVCExample.Models.Data.Account", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+
+                    b.ToTable("Account");
+
+                    b.HasDiscriminator().HasValue("Account");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -299,9 +316,9 @@ namespace MVCExample.Data.Migrations
 
             modelBuilder.Entity("MVCExample.Models.Data.Basket", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                    b.HasOne("MVCExample.Models.Data.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("IdentityUserId");
+                        .HasForeignKey("AccountId");
                 });
 
             modelBuilder.Entity("MVCExample.Models.Data.BasketItem", b =>
