@@ -53,5 +53,16 @@ namespace MVCExample.DataAccess.Repositorys
             context.Entry(product).State = EntityState.Modified;
             return await context.SaveChangesAsync();
         }
+
+        public async Task<int> DeleteProductByIdAsync(int? id)
+        {
+            Product product = context.Products.Where(x => x.ProductId == id).SingleOrDefault();
+            if (product != null)
+            {
+                context.Products.Remove(product);
+                return await context.SaveChangesAsync();
+            }
+            else throw new Exception("Product was not found");
+        }
     }
 }

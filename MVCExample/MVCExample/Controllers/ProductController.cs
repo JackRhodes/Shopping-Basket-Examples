@@ -146,27 +146,39 @@ namespace MVCExample.Controllers
             return View();
         }
 
-        //// GET: Product/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
+        [HttpGet]
+        // GET: Product/Delete/5
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                Product product = await productManager.GetProductByIdAsync(id);
+                ProductDto productDto = mapper.Map<ProductDto>(product);
 
-        //// POST: Product/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add delete logic here
+                return View(productDto);
+            }
 
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(this.Index));
+            }
+        }
+
+        // POST: Product/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(int? id)
+        {
+            Product product = await productManager.GetProductByIdAsync(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            await productManager.DeleteProductByIdAsync(id);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

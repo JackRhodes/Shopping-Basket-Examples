@@ -22,6 +22,11 @@ namespace MVCExample.Services.Managers
             return await productRepository.CreateProductAsync(product);
         }
 
+        public async Task<int> DeleteProductByIdAsync(int? id)
+        {
+            return await productRepository.DeleteProductByIdAsync(id);
+        }
+
         public Task<IEnumerable<Product>> FuzzySearchProductByName(string name)
         {
             if (!(String.IsNullOrEmpty(name) || String.IsNullOrWhiteSpace(name)))
@@ -52,5 +57,6 @@ namespace MVCExample.Services.Managers
             else
                 throw new ArgumentException("Product not found");                    
         }
+        
     }
 }

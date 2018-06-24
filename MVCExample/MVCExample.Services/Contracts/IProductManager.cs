@@ -18,5 +18,6 @@ namespace MVCExample.Services.Contracts
 
         Task<int> UpdateProductAsync(Product product);
 
+        Task<int> DeleteProductByIdAsync(int? id);
     }
 }

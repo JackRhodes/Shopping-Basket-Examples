@@ -15,5 +15,7 @@ namespace MVCExample.DataAccess.Contracts
         Task<int> CreateProductAsync(Product product);
 
         Task<int> UpdateProductAsync(Product product);
+
+        Task<int> DeleteProductByIdAsync(int? id);
     }
 }
