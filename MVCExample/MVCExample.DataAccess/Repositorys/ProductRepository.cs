@@ -31,7 +31,7 @@ namespace MVCExample.DataAccess.Repositorys
 
         public async Task<Product> GetProductByIdAsync(int? id)
         {
-            return await context.Products.SingleOrDefaultAsync(x => x.ProductId == id);
+            return await context.Products.Include(x=>x.ProductType).SingleOrDefaultAsync(x => x.ProductId == id);
         }
 
         public async Task<IEnumerable<Product>> GetAllProductsAsync()

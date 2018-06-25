@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MVCExample.Data;
 using MVCExample.DataAccess.Contracts;
 using MVCExample.Models.Data;
@@ -16,10 +17,11 @@ namespace MVCExample.DataAccess.Repositorys
             this.context = context;
         }
 
-        public async Task<IdentityUser> GetCurrentUserAsync(string accountId)
+        public Task<IdentityUser> GetCurrentUserAsync(string accountId)
         {
-            var task = Task.Run(() => context.Users.Where(x => x.Id == accountId).FirstOrDefault());
-            return await task;
+            return context.Users
+                .Where(x => x.Id == accountId)
+                .FirstOrDefaultAsync();
         }
     }
 }

@@ -20,19 +20,32 @@ namespace MVCExample.DataAccess.Repositorys
             this.context = context;
         }
 
-        public async Task<IEnumerable<BasketItem>> GetBasketItemsFromBasketAsync(Basket basket)
+        public async Task<int> AddProductToBasketAsync(Product product, Basket basket)
         {
-            return await context.BasketItems.Include(x => x.Basket)
-                .Include(x=>x.Product) //Include Product
-                .Include(x=>x.Product.ProductType) //Include Product Type
-                .Where(x => x.Basket.BasketId == basket.BasketId).ToListAsync();
+            BasketItem basketItem = new BasketItem()
+            {
+                BasketId = basket.BasketId,
+                ProductId = product.ProductId
+            };
+            
+            context.BasketItems.Add(basketItem);
+
+            return await context.SaveChangesAsync();
         }
 
-        public async Task<Basket> GetUserBasketAsync(IdentityUser identityUser)
+        public async Task<IEnumerable<BasketItem>> GetBasketItemsFromBasketAsync(Basket basket)
+        {
+            return await context.BasketItems
+                .Where(x => x.BasketId == basket.BasketId).ToListAsync();
+        }
+
+        public Task<Basket> GetUserBasketAsync(IdentityUser identityUser)
         {
             //Include method returns related Entity. 
-            var task = Task.Run(() => context.Basket.Include(x => x.IdentityUser).Where(x => x.IdentityUser.Id == identityUser.Id).SingleOrDefault());
-            return await task;
+            return context.Basket
+                .Where(x => x.IdentityUserId == identityUser.Id)
+                .SingleOrDefaultAsync();     
         }
+
     }
 }

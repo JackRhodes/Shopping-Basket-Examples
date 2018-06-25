@@ -8,6 +8,8 @@ namespace MVCExample.Models.DTO
     {
         public int BasketItemId { get; set; }
 
-        public ProductDto Product { get; set; }
+        public int ProductId { get; set; }
+        public int BasketId { get; set; }
+
     }
 }

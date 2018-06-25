@@ -9,8 +9,6 @@ namespace MVCExample.Models.DTO
     {
         public int BasketId { get; set; }
 
-        public IdentityUser IdentityUser { get; set; }
-
-        public BasketDto Basket { get; set; }
+        public string IdentityUserId { get; set; }
     }
 }

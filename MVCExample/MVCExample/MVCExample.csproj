@@ -6,6 +6,15 @@
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Scripts\app.ts" />
+    <None Remove="Scripts\Utils\apiUtils.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Scripts\app.ts" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
@@ -18,6 +27,12 @@
     <ProjectReference Include="..\MVCExample.DataAccess\MVCExample.DataAccess.csproj" />
     <ProjectReference Include="..\MVCExample.Models\MVCExample.Models.csproj" />
     <ProjectReference Include="..\MVCExample.Services\MVCExample.Services.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\app.ts" />
+    <TypeScriptCompile Include="Scripts\Utils\apiUtils.ts" />
   </ItemGroup>
 
 

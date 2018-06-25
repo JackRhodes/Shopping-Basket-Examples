@@ -12,10 +12,25 @@ namespace MVCExample.Services.Managers
     public class BasketManager : IBasketManager
     {
         private readonly IBasketRepository basketRepository;
+        private readonly IProductManager productManager;
 
-        public BasketManager(IBasketRepository basketRepository)
+        public BasketManager(IBasketRepository basketRepository, IProductManager productManager)
         {
             this.basketRepository = basketRepository;
+            this.productManager = productManager;
+        }
+
+        public async Task<int> AddProductToBasketAsync(int productId, Basket basket)
+        {
+            if (basket == null)
+                throw new ArgumentException();
+
+            Product product = await productManager.GetProductByIdAsync(productId);
+
+            if (product == null)
+                throw new Exception("Could not retrieve product");
+
+            return await basketRepository.AddProductToBasketAsync(product, basket);
         }
 
         public async Task<IEnumerable<BasketItem>> GetBasketItemsFromBasketAsync(Basket basket)

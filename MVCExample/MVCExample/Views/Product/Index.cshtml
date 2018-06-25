@@ -15,12 +15,16 @@
             <td> <a asp-action="Details" asp-route-id="@item.ProductId"> @item.Name </a></td>
             <td>@item.Price</td>
             <td>
+                <!-- Refactor when front-end framework is implemented. This is disgusting :-( -->
                 <div class="btn-group btn-group-sm">
+                    <form asp-controller="Basket" asp-action="Add" method="post">  <input type="hidden" name="productId" value="@item.ProductId" /> <button type="submit" class="btn btn-sm btn-success">Add to Basket</button></form>
                     <a asp-action="Delete" class="btn btn-sm btn-danger" asp-route-id="@item.ProductId">Delete</a>
                 </div>
             </td>
 
         </tr>
+
+
            
         }
 
@@ -33,6 +37,11 @@ else
 
     <p>No Products found within database</p>
 
+}
+
+@section Scripts {
+    <script src="~/js/app.js"></script>
+    <script src="~/js/Utils/apiUtils.js"></script>
 }
 
 

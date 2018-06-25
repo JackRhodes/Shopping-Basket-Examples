@@ -11,6 +11,7 @@ namespace MVCExample.Models.Data
         [Key]
         public int BasketId { get; set; }
 
-        public IdentityUser IdentityUser { get; set; }
+        public string IdentityUserId { get; set; }
+        // public IdentityUser IdentityUser { get; set; }
     }
 }

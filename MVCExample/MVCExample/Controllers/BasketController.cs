@@ -20,18 +20,21 @@ namespace MVCExample.Controllers
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly IAccountManager accountManager;
         private readonly IBasketManager basketManager;
+        private readonly IProductManager productManager;
         private readonly IMapper mapper;
 
         public BasketController(UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             IAccountManager accountManager,
             IBasketManager basketManager,
+            IProductManager productManager,
             IMapper mapper)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.accountManager = accountManager;
             this.basketManager = basketManager;
+            this.productManager = productManager;
             this.mapper = mapper;
         }
 
@@ -48,14 +51,14 @@ namespace MVCExample.Controllers
 
             List<ProductDto> productDtos = new List<ProductDto>();
 
-            Parallel.ForEach(basketItemDtos.ToList(),
-                i =>
-                {
-                    productDtos.Add(i.Product);
-                }
+            foreach (var item in basketItemDtos)
+            {
+                Product product = await productManager.GetProductByIdAsync(item.ProductId);
+                ProductDto productDto = mapper.Map<ProductDto>(product);
 
-                );
+                productDtos.Add(productDto);
 
+            }
             BasketViewModel basketViewModel = new BasketViewModel()
             {
                 BasketItems = productDtos
@@ -67,27 +70,20 @@ namespace MVCExample.Controllers
             return View(basketViewModel);
         }
 
-        // GET: Basket/Create
-        public ActionResult Add()
-        {
-            return View();
-        }
 
         // POST: Basket/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(IFormCollection collection)
+        public async Task<ActionResult> Add(int productId)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            string userId = userManager.GetUserId(User);
+            IdentityUser identityUser = await accountManager.GetCurrentUserAsync(userId);
+            Basket basket = await basketManager.GetUserBasketAsync(identityUser);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            await basketManager.AddProductToBasketAsync(productId, basket);
+
+            return RedirectToAction(nameof(Index));
         }
 
 
