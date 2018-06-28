@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using MVCExample.Data;
 using MVCExample.DataAccess.Contracts;
-using MVCExample.DataAccess.Repositorys;
+using MVCExample.DataAccess.Repositories;
 using MVCExample.Services.Contracts;
 using MVCExample.Services.Managers;
 

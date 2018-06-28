@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-namespace MVCExample.DataAccess.Repositorys
+namespace MVCExample.DataAccess.Repositories
 {
     public class ProductRepository : IProductRepository
     {

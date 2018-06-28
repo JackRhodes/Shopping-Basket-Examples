@@ -46,5 +46,15 @@ namespace MVCExample.Services.Managers
                 return await basketRepository.GetUserBasketAsync(identityUser);
             else throw new ArgumentException();
         }
+
+        public Task<int> RemoveProductFromBasketAsync(int productId, IdentityUser identityUser)
+        {
+
+            Basket basket = GetUserBasketAsync(identityUser).Result;
+            BasketItem basketItem = basketRepository.GetBasketItemFromBasketByIdAsync(basket, productId).Result;
+
+            return basketRepository.RemoveProductFromBasketAsync(basketItem);
+            
+        }
     }
 }

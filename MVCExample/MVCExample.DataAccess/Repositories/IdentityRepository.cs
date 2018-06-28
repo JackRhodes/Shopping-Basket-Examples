@@ -6,7 +6,7 @@ using MVCExample.Models.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MVCExample.DataAccess.Repositorys
+namespace MVCExample.DataAccess.Repositories
 {
     public class IdentityRepository : IIdentityRepository
     {

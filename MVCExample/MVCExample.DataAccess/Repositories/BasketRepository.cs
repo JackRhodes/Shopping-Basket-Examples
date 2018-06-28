@@ -9,7 +9,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
-namespace MVCExample.DataAccess.Repositorys
+namespace MVCExample.DataAccess.Repositories
 {
     public class BasketRepository : IBasketRepository
     {
@@ -33,6 +33,13 @@ namespace MVCExample.DataAccess.Repositorys
             return await context.SaveChangesAsync();
         }
 
+        public Task<BasketItem> GetBasketItemFromBasketByIdAsync(Basket basket, int productId)
+        {
+           return context.BasketItems.Where(x => x.BasketId == basket.BasketId 
+           && x.ProductId == productId)
+           .SingleOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<BasketItem>> GetBasketItemsFromBasketAsync(Basket basket)
         {
             return await context.BasketItems
@@ -47,5 +54,12 @@ namespace MVCExample.DataAccess.Repositorys
                 .SingleOrDefaultAsync();     
         }
 
+        public Task<int> RemoveProductFromBasketAsync(BasketItem basketItem)
+        {
+            context.Entry(basketItem).State = EntityState.Deleted;
+            context.BasketItems.Remove(basketItem);
+            
+            return context.SaveChangesAsync();
+        }
     }
 }

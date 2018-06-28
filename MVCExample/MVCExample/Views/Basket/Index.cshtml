@@ -1,14 +1,11 @@
 ﻿@model MVCExample.Models.ViewModel.BasketViewModel
 
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "Basket";
 }
 
-<h2>View</h2>
+<h2>Basket</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -18,12 +15,15 @@
     <tbody>
 @foreach (var item in Model.BasketItems) {
         <tr>
-        
+
             <td>@item.Name</td>
             <td>@item.Description</td>
             <td>£@item.Price</td>
             <td>@item.ProductType.Name</td>
-        
+
+            <td> <form asp-controller="Basket" asp-action="Remove" method="post">  <input type="hidden" name="id" value="@item.ProductId" /> <button type="submit" class="btn btn-sm btn-danger">Remove from basket</button></form></td>
+
+
         </tr>
 }
     </tbody>

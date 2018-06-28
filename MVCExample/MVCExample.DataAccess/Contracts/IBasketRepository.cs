@@ -14,5 +14,9 @@ namespace MVCExample.DataAccess.Contracts
         Task<IEnumerable<BasketItem>> GetBasketItemsFromBasketAsync(Basket basket);
 
         Task<int> AddProductToBasketAsync(Product product, Basket basket);
+
+        Task<int> RemoveProductFromBasketAsync(BasketItem basketItem);
+
+        Task<BasketItem> GetBasketItemFromBasketByIdAsync(Basket basket, int productId);
     }
 }

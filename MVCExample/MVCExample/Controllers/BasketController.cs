@@ -86,28 +86,20 @@ namespace MVCExample.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
-        // GET: Basket/Delete/5
-        public ActionResult Remove(int id)
-        {
-            return View();
-        }
-
         // POST: Basket/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Remove(int id, IFormCollection collection)
+        public ActionResult Remove(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            string userId = userManager.GetUserId(User);
+            IdentityUser identityUser = accountManager.GetCurrentUserAsync(userId).Result;
+            Basket basket = basketManager.GetUserBasketAsync(identityUser).Result;
+
+
+            basketManager.RemoveProductFromBasketAsync(id, identityUser);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
